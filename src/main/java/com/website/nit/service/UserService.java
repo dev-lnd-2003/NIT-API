@@ -12,6 +12,8 @@ public interface UserService {
 
     public Users findByUsername(String username);
 
+    public Users login(String username, String password);
+
 
     public Users register(Users user);
 

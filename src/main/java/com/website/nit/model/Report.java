@@ -23,6 +23,8 @@ public class Report implements Serializable {
 
     private String reason;
 
+    private Boolean confirm;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "Create_Date")
     private Date createDate;

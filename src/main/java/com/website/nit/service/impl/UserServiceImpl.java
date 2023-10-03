@@ -38,6 +38,15 @@ public class UserServiceImpl implements UserService {
         return usersRepository.findByUsername(username);
     }
 
+    @Override
+    public Users login(String username, String password) {
+        Users user = findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
+
 
     @Override
     public Users register(Users user) {
