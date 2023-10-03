@@ -27,7 +27,7 @@ public class Comments implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Create_Date")
-    private Date createDate;
+    private Date createDate = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "User_Id")
