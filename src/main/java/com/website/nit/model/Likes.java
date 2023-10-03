@@ -22,10 +22,10 @@ public class Likes implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "User_Id")
+    @JoinColumn(name = "User_ID")
     Users users;
 
     @ManyToOne
-    @JoinColumn(name = "News_Id")
+    @JoinColumn(name = "News_ID")
     News news;
 }
