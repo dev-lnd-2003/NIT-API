@@ -1,7 +1,7 @@
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvn dependency:go-offline
-COPY src ./src
-CD ["./mvnw","springboot:run"]
+# syntax=docker/dockerfile:1
+
+FROM openjdk:17-jdk-alpine
+ARG JAR_FILE=target/*.jar
+
+COPY ./target/nit-0.0.1.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
