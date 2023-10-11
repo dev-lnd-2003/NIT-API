@@ -9,4 +9,5 @@ public interface NewsService {
     List<News> findAll();
 
 
+    News findById(Integer id);
 }

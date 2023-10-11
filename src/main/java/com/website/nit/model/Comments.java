@@ -29,7 +29,7 @@ public class Comments implements Serializable {
     @Column(name = "Create_Date")
     private Date createDate = new Date();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "User_Id")
     Users users;
 

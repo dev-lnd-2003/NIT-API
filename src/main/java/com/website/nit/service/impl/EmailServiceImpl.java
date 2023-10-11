@@ -47,4 +47,17 @@ public class EmailServiceImpl implements EmailService {
 
         mailSender.send(message);
     }
+
+    @Override
+    public void sendResetCode(Users recipient, String email, String resetCode) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        String subject = "Code reset";
+        String content = "Dear " + recipient.getFullName() + "Code is: " + resetCode;
+
+        message.setTo(email);
+        message.setSubject(subject);
+        message.setText(content);
+
+        mailSender.send(message);
+    }
 }

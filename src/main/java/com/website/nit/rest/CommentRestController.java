@@ -32,7 +32,8 @@ public class CommentRestController {
     }
 
     @PutMapping("/edit-comment/{id}")
-    public Comments editComment(@RequestBody @PathVariable("id") Comments comments){
-        return commentService.editComment(comments);
+    public Comments editComment(@PathVariable("id") Integer commentId, @RequestBody Comments updatedComment){
+        return commentService.editComment(commentId, updatedComment);
+
     }
 }

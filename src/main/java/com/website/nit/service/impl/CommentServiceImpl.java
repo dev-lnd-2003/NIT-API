@@ -31,7 +31,19 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comments editComment(Comments comments) {
-        return commentsRepository.save(comments);
+    public Comments editComment(Integer id, Comments comments) {
+        Comments entity = findCommentById(id);
+        if (entity !=null){
+            entity.setContent(comments.getContent());
+            return commentsRepository.save(entity);
+        }
+        return null;
     }
+
+    @Override
+    public Comments findCommentById(Integer id) {
+        return commentsRepository.findById(id).orElse(null);
+    }
+
+
 }

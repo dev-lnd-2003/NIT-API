@@ -38,16 +38,19 @@ public class Users implements Serializable {
 
     private Boolean gender;
 
+    @Column(name = "Reset_Code")
+    private String resetCode;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "Create_Date")
     private Date createDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "users")
     List<Comments> comments;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "users")
     List<Likes> likes;
 
     @JsonIgnore

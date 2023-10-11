@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -17,5 +18,11 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> findAll() {
         return newsRepository.findAll();
+    }
+
+    @Override
+    public News findById(Integer id) {
+        Optional<News> optionalNews = newsRepository.findById(id);
+        return optionalNews.orElse(null);
     }
 }

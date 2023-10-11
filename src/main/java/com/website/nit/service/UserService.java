@@ -15,9 +15,13 @@ public interface UserService {
     public Users login(String username, String password);
 
 
+
     public Users register(Users user);
 
-    Users resetPassword(String email);
+    public Users requestPasswordReset(String email);
+    boolean validateResetCode(String email, String resetCode);
+    Users resetPasswordWithCode(String email, String resetCode, String newPassword);
+
 
     Users changePassword(String username,String oldPassword,String newPassword);
 

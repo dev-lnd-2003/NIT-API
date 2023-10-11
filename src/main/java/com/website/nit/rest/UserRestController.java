@@ -37,12 +37,27 @@ public class UserRestController {
         return users;
     }
 
-    @PostMapping(value = "/user/reset-password/{email}")
-    public Users resetPassword(@PathVariable("email") String email) {
-        Users updatedUser = userService.resetPassword(email);
+
+    @PostMapping(value = "/user/request-reset/{email}")
+    public Users requestPasswordReset(@PathVariable("email") String email) {
+        Users updatedUser = userService.requestPasswordReset(email);
         return updatedUser;
     }
+    @PostMapping(value = "/user/reset-password/{email}")
+    public ResponseEntity<String> resetPasswordWithCode(@PathVariable("email") String email,
+                                                        @RequestBody Map<String, String> requestBody) {
+        String resetCode = requestBody.get("resetCode");
+        String newPassword = requestBody.get("newPassword");
 
+        if (userService.validateResetCode(email, resetCode)) {
+            Users updatedUser = userService.resetPasswordWithCode(email, resetCode, newPassword);
+            if (updatedUser != null) {
+                return ResponseEntity.ok("Password reset successfully");
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid reset code");
+    }
     @PutMapping(value = "/user/change-password/{username}")
     public Users changePassword(@PathVariable("username") String username,
                                 @RequestBody Map<String, String> passwords){

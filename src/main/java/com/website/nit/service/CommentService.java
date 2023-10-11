@@ -13,5 +13,8 @@ public interface CommentService {
 
     void deleteComment(Comments comments);
 
-    Comments editComment(Comments comments);
+    Comments editComment(Integer id, Comments comments);
+
+    Comments findCommentById(Integer id);
+
 }

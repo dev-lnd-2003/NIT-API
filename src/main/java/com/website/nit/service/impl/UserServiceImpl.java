@@ -55,15 +55,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users resetPassword(String email) {
-        return Optional.ofNullable(findByEmail(email))
-                .map(users -> {
-                    String newPassword = String.valueOf((int) (Math.random() * ((999 - 100) + 1)) + 1000);
-                    users.setPassword(newPassword);
-                    emailService.sendEmail(users, email, newPassword, EmailType.RESET_PASSWORD);
-                    return usersRepository.save(users);
-                }).orElse(null);
+    public Users requestPasswordReset(String email) {
+        return Optional.ofNullable(findByEmail(email)).map(user -> {
+            String resetCode = generateResetCode();
+            user.setResetCode(resetCode);
+            emailService.sendResetCode(user, email, resetCode);
+            return usersRepository.save(user);
+        }).orElse(null);
     }
+
+    @Override
+    public boolean validateResetCode(String email, String resetCode) {
+        Users user = findByEmail(email);
+        return user != null && user.getResetCode().equals(resetCode);
+    }
+
+    @Override
+    public Users resetPasswordWithCode(String email, String resetCode, String newPassword) {
+        return Optional.ofNullable(findByEmail(email)).filter(user -> user.getResetCode().equals(resetCode)).map(user -> {
+            user.setPassword(newPassword);
+            user.setResetCode(null); // Reset the reset code after successful reset
+            return usersRepository.save(user);
+        }).orElse(null);
+    }
+
 
     @Override
     public Users changePassword(String username, String oldPassword, String newPassword) {
@@ -76,5 +91,9 @@ public class UserServiceImpl implements UserService {
                 }).orElse(null);
     }
 
+    // In UserServiceImpl.java
 
+    private String generateResetCode() {
+        return String.valueOf((int) (Math.random() * ((9999 - 1000) + 1)) + 1000);
+    }
 }
